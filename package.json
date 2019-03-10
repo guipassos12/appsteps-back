@@ -1,0 +1,29 @@
+{
+  "name": "appsteps-back",
+  "version": "1.0.0",
+  "description": "Backend module of appsteps",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guipassos12/appsteps-back.git"
+  },
+  "author": "Gui Passos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guipassos12/appsteps-back/issues"
+  },
+  "homepage": "https://github.com/guipassos12/appsteps-back#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongodb": "^3.1.13"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
