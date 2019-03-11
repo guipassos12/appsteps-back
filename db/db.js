@@ -1,3 +1,3 @@
 module.exports = {
-    url : 'YOUR URL HERE'
+    url : "mongodb+srv://guipassos:greenday1@cluster0-srir5.mongodb.net/test"
   };

@@ -1,6 +1,7 @@
-const noteRoutes = require('./note_routes');
+const comprasRoutes = require('./compras_routes');
+const lembretesRoutes = require('./lembretes_routes');
 
 module.exports = function(app, db) {
-  noteRoutes(app, db);
-  // Other route groups could go here, in the future
+  comprasRoutes(app, db);
+  lembretesRoutes(app, db);
 };
