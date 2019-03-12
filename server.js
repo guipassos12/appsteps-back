@@ -24,7 +24,7 @@ MongoClient.connect(db.url, { useNewUrlParser: true }, (err, client) => {
     const database = client.db("appstepsdb");
 
     require('./app/routes')(app, database);
-    client.close();
+    //client.close();
 });
 
 /*

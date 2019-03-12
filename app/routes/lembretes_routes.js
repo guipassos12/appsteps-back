@@ -8,7 +8,6 @@ module.exports = function (app, db) {
           res.send({ 'error': 'Erro ao buscar lembretes: ' + err });
         } else {
           res.send(result);
-          db.close();
         }
       });
     });
@@ -22,7 +21,6 @@ module.exports = function (app, db) {
           res.send({ 'error': 'Erro ao inserir lembrete: ' + err });
         } else {
           res.send(result.ops[0]);
-          db.close();
         }
       });
     });
