@@ -31,7 +31,7 @@ module.exports = function (app, db) {
     const id = req.params.id;
     const compra = { '_id': new ObjectId(id) };
 
-    db.collection('notes').remove(compra, (err, item) => {
+    db.collection('notes').deleteOne(compra, (err, item) => {
       if (err) {
         res.send({ 'error': 'Erro ao finalizar compra: ' + err });
       } else {
