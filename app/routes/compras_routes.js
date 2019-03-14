@@ -35,7 +35,8 @@ module.exports = function (app, db) {
       if (err) {
         res.send({ 'error': 'Erro ao finalizar compra: ' + err });
       } else {
-        res.send(result.ops[0]);
+        console.log(result);
+        res.send('Compra finalizada com sucesso');
       }
     });
   });
