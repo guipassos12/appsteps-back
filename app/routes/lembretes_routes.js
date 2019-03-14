@@ -1,3 +1,5 @@
+const ObjectId = require('mongodb').ObjectID;
+
 module.exports = function (app, db) {
 
     const colName = 'lembretes';
@@ -28,7 +30,7 @@ module.exports = function (app, db) {
   
     app.delete('/lembretes/del/:id', (req, res) => {
       const id = req.params.id;
-      const lembrete = { '_id': new ObjectID(id) };
+      const lembrete = { '_id': new ObjectId(id) };
   
       db.collection('notes').remove(lembrete, (err, item) => {
         if (err) {
