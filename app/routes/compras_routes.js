@@ -31,11 +31,11 @@ module.exports = function (app, db) {
     const id = req.params.id;
     const compra = { '_id': new ObjectId(id) };
 
-    db.collection('notes').deleteOne(compra, (err, item) => {
+    db.collection('notes').deleteOne(compra, (err, result) => {
       if (err) {
         res.send({ 'error': 'Erro ao finalizar compra: ' + err });
       } else {
-        res.send('Compra ' + id + ' finalizada!');
+        res.send(result.ops[0]);
       }
     });
   });
