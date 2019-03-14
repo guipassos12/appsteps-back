@@ -29,7 +29,7 @@ module.exports = function (app, db) {
 
   app.delete('/compras/del/:id', (req, res) => {
     const id = req.params.id;
-    const compra = { '_id': new ObjectId(id) };
+    const compra = { '_id': id };
 
     db.collection('notes').deleteOne(compra, (err, result) => {
       if (err) {
