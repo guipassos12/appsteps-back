@@ -14,8 +14,7 @@ module.exports = function (app, db) {
 
 
   app.post('/compras/add', (req, res) => {
-    const compra = { tipo: req.body.tipo, titulo: req.body.titulo };
-    console.log(compra);
+    const compra = { titulo: req.body.titulo };
     db.collection(colName).insert(compra, (err, result) => {
       if (err) {
         res.send({ 'error': 'Erro ao inserir compra: ' + err });
