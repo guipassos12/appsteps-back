@@ -28,14 +28,12 @@ module.exports = function (app, db) {
 
 
   app.delete('/compras/del/:id', (req, res) => {
-    const id = req.params.id;
-    const compra = { '_id': id };
+    
 
-    db.collection('notes').deleteOne(compra, (err, result) => {
+    db.collection('notes').deleteOne({ '_id': new ObjectID(req.params.id) }, (err, result) => {
       if (err) {
         res.send({ 'error': 'Erro ao finalizar compra: ' + err });
       } else {
-        console.log(result);
         res.send('Compra finalizada com sucesso');
       }
     });
