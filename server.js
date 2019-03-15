@@ -27,15 +27,5 @@ MongoClient.connect(db.url, { useNewUrlParser: true }, (err, client) => {
     const database = client.db("appstepsdb");
 
     require('./app/routes')(app, database);
-    //client.close();
-});
 
-/*
-app.listen(port, () => {
-    console.log('Ligado na porta: ' + port);
 });
-
-require('./app/routes')(app, {});
-app.get('/', function (req, res) {
-    res.send("Tamo ai na atividade");
-});*/

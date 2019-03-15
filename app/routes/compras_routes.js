@@ -28,9 +28,7 @@ module.exports = function (app, db) {
 
 
   app.delete('/compras/del/:id', (req, res) => {
-
-
-    db.collection('notes').deleteOne({ "_id": ObjectId(req.params.id) }, (err, result) => {
+    db.collection(colName).deleteOne({ _id: ObjectId(req.params.id) }, (err, result) => {
       if (err) {
         res.send({ 'error': 'Erro ao finalizar compra: ' + err });
       } else {

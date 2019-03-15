@@ -16,7 +16,10 @@ module.exports = function (app, db) {
   
     
     app.post('/lembretes/add', (req, res) => {
-      const lembrete = { compromisso: req.body.compromisso, responsavel: req.body.responsavel, data: req.body.data, feito: req.body.feito };
+      const lembrete = { compromisso: req.body.compromisso, 
+                         responsavel: req.body.responsavel, 
+                         data: req.body.data, 
+                         feito: req.body.feito };
   
       db.collection(colName).insert(lembrete, (err, result) => {
         if (err) {
@@ -29,14 +32,11 @@ module.exports = function (app, db) {
   
   
     app.delete('/lembretes/del/:id', (req, res) => {
-      const id = req.params.id;
-      const lembrete = { '_id': new ObjectId(id) };
-  
-      db.collection('notes').remove(lembrete, (err, item) => {
+      db.collection(colName).deleteOne({ _id: ObjectId(req.params.id) }, (err, result) => {
         if (err) {
           res.send({ 'error': 'Erro ao finalizar lembrete: ' + err });
         } else {
-          res.send('Lembrete ' + id + ' finalizada!');
+          res.send('Lembrete finalizado!');
         }
       });
     });
