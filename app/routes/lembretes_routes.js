@@ -36,7 +36,7 @@ module.exports = function (app, db) {
         if (err) {
           res.send({ 'error': 'Erro ao finalizar lembrete: ' + err });
         } else {
-          res.send('Lembrete finalizado!');
+          res.send({'sucess': 'Lembrete finalizado!'});
         }
       });
     });

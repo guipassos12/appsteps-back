@@ -32,7 +32,7 @@ module.exports = function (app, db) {
       if (err) {
         res.send({ 'error': 'Erro ao finalizar compra: ' + err });
       } else {
-        res.send('Compra finalizada com sucesso');
+        res.send({'sucess': 'Compra finalizada com sucesso'});
       }
     });
   });
