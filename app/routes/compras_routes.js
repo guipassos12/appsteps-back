@@ -29,7 +29,8 @@ module.exports = function (app, db, autoIncrement) {
 
 
   app.delete('/compras/del/:id', (req, res) => {
-    db.collection(colName).deleteOne({ _id: req.params.id }, (err, result) => {
+    console.log(req.params.id);
+    db.collection(colName).deleteOne({ '_id': req.params.id }, (err, result) => {
       if (err) {
         res.send({ 'error': 'Erro ao finalizar compra: ' + err });
       } else {
