@@ -22,7 +22,8 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "mongodb": "^3.1.13"
+    "mongodb": "^3.1.13",
+    "mongodb-autoincrement": "^1.0.1"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"

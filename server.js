@@ -1,5 +1,6 @@
 const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
+const autoIncrement = require('mongodb-autoincrement');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const db = require('./db/db');
@@ -26,6 +27,6 @@ MongoClient.connect(db.url, { useNewUrlParser: true }, (err, client) => {
 
     const database = client.db("appstepsdb");
 
-    require('./app/routes')(app, database);
+    require('./app/routes')(app, database, autoIncrement);
 
 });
