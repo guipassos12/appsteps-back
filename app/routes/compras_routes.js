@@ -17,7 +17,7 @@ module.exports = function (app, db, autoIncrement) {
 
   app.post('/compras/add', (req, res) => {
 
-    autoIncrement.getNextSequence(db, collectionName, (err, autoIndex) => {
+    autoIncrement.getNextSequence(db, colName, (err, autoIndex) => {
       const compra = { _id: autoIndex, titulo: req.body.titulo };
       db.collection(colName).insert(compra, (err, result) => {
         if (err) {

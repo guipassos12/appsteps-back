@@ -17,7 +17,7 @@ module.exports = function (app, db, autoIncrement) {
 
   app.post('/lembretes/add', (req, res) => {
 
-    autoIncrement.getNextSequence(db, collectionName, (err, autoIndex) => {
+    autoIncrement.getNextSequence(db, colName, (err, autoIndex) => {
       const lembrete = {
         _id: autoIndex,
         compromisso: req.body.compromisso,
