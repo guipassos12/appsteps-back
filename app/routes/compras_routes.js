@@ -32,7 +32,13 @@ module.exports = function (app, db) {
       if (err) {
         res.send({ 'error': 'Erro ao finalizar compra: ' + err });
       } else {
-        res.send({'sucess': 'Compra finalizada com sucesso'});
+        db.collection(colName).find({}).toArray((err, result) => {
+          if (err) {
+            res.send({ 'error': 'Erro ao buscar compras apos salvar: ' + err });
+          } else {
+            res.send(result);
+          }
+        });
       }
     });
   });
