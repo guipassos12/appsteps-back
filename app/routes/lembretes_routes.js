@@ -25,7 +25,13 @@ module.exports = function (app, db) {
         if (err) {
           res.send({ 'error': 'Erro ao inserir lembrete: ' + err });
         } else {
-          res.send(result.ops[0]);
+          db.collection(colName).find({}).toArray((err, result) => {
+            if (err) {
+              res.send({ 'error': 'Erro ao buscar lembretes apos salvar: ' + err });
+            } else {
+              res.send(result);
+            }
+          });
         }
       });
     });
@@ -36,7 +42,13 @@ module.exports = function (app, db) {
         if (err) {
           res.send({ 'error': 'Erro ao finalizar lembrete: ' + err });
         } else {
-          res.send({'sucess': 'Lembrete finalizado!'});
+          db.collection(colName).find({}).toArray((err, result) => {
+            if (err) {
+              res.send({ 'error': 'Erro ao buscar lembretes apos deletar: ' + err });
+            } else {
+              res.send(result);
+            }
+          });
         }
       });
     });

@@ -21,7 +21,13 @@ module.exports = function (app, db) {
       if (err) {
         res.send({ 'error': 'Erro ao inserir compra: ' + err });
       } else {
-        res.send(result.ops[0]);
+        db.collection(colName).find({}).toArray((err, result) => {
+          if (err) {
+            res.send({ 'error': 'Erro ao buscar compras apos salvar: ' + err });
+          } else {
+            res.send(result);
+          }
+        });
       }
     });
   });
@@ -34,7 +40,7 @@ module.exports = function (app, db) {
       } else {
         db.collection(colName).find({}).toArray((err, result) => {
           if (err) {
-            res.send({ 'error': 'Erro ao buscar compras apos salvar: ' + err });
+            res.send({ 'error': 'Erro ao buscar compras apos deletar: ' + err });
           } else {
             res.send(result);
           }
