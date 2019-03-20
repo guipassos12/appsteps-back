@@ -1,5 +1,3 @@
-const ObjectId = require('mongodb').ObjectID;
-
 module.exports = function (app, db, autoIncrement) {
 
   const colName = 'lembretes';
@@ -16,7 +14,6 @@ module.exports = function (app, db, autoIncrement) {
 
 
   app.post('/lembretes/add', (req, res) => {
-
     autoIncrement.getNextSequence(db, colName, (err, autoIndex) => {
       const lembrete = {
         _id: autoIndex,
@@ -33,22 +30,16 @@ module.exports = function (app, db, autoIncrement) {
           res.send(lembrete);
         }
       });
-    });  
+    });
   });
 
 
   app.delete('/lembretes/del/:id', (req, res) => {
-    db.collection(colName).deleteOne({ _id: ObjectId(req.params.id) }, (err, result) => {
+    db.collection(colName).deleteOne({ _id: req.params.id }, (err, result) => {
       if (err) {
         res.send({ 'error': 'Erro ao finalizar lembrete: ' + err });
       } else {
-        db.collection(colName).find({}).toArray((err, result) => {
-          if (err) {
-            res.send({ 'error': 'Erro ao buscar lembretes apos deletar: ' + err });
-          } else {
-            res.send(result);
-          }
-        });
+        res.send({ 'ok': req.params.id + ' deletado com sucesso' });
       }
     });
   });
