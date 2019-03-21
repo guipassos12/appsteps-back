@@ -1,3 +1,5 @@
+const ObjectId = require('mongodb').ObjectID;
+
 module.exports = function (app, db, autoIncrement) {
 
   const colName = 'compras';
@@ -17,7 +19,7 @@ module.exports = function (app, db, autoIncrement) {
     autoIncrement.getNextSequence(db, colName, (err, autoIndex) => {
       const compra = { _id: autoIndex, titulo: req.body.titulo };
       
-      db.collection(colName).insert(compra, (err, result) => {
+      db.collection(colName).insertOne(compra, (err, result) => {
         if (err) {
           res.send({ 'error': 'Erro ao inserir compra: ' + err });
         } else {
@@ -29,8 +31,7 @@ module.exports = function (app, db, autoIncrement) {
 
 
   app.delete('/compras/del/:id', (req, res) => {
-    console.log(req.params.id);
-    db.collection(colName).deleteOne({ '_id': req.params.id }, (err, result) => {
+    db.collection(colName).deleteOne({ _id : parseInt(req.params.id) }, (err, result) => {
       if (err) {
         res.send({ 'error': 'Erro ao finalizar compra: ' + err });
       } else {

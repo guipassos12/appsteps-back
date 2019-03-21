@@ -23,7 +23,7 @@ module.exports = function (app, db, autoIncrement) {
         feito: req.body.feito
       };
 
-      db.collection(colName).insert(lembrete, (err, result) => {
+      db.collection(colName).insertOne(lembrete, (err, result) => {
         if (err) {
           res.send({ 'error': 'Erro ao inserir lembrete: ' + err });
         } else {
@@ -35,7 +35,7 @@ module.exports = function (app, db, autoIncrement) {
 
 
   app.delete('/lembretes/del/:id', (req, res) => {
-    db.collection(colName).deleteOne({ _id: req.params.id }, (err, result) => {
+    db.collection(colName).deleteOne({ _id: parseInt(req.params.id) }, (err, result) => {
       if (err) {
         res.send({ 'error': 'Erro ao finalizar lembrete: ' + err });
       } else {
