@@ -36,7 +36,7 @@ module.exports = function (app, db, autoIncrement) {
 
   app.put('/lembretes/update/:id', (req, res) => {
     var id = parseInt(req.params.id);
-    var newVal = { $set: { compromisso: req.body.compromisso, responsavel: req.body.responsavel, data: req.body.data, } };
+    var newVal = { $set: { compromisso: req.body.compromisso, responsavel: req.body.responsavel, data: req.body.data } };
     var lembrete = {
       _id: req.params.id,
       compromisso: req.body.compromisso,
