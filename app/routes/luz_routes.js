@@ -28,18 +28,19 @@ module.exports = function (app, db, autoIncrement) {
   });
 
 
-  app.put('/luz/update/:id', (req, res) => {
-    var id = parseInt(req.params.id);
+  app.put('/luz/update/:id', (req, res) => { 
     var luz = { _id: req.params.id, valor: req.params.valor, data: req.body.data };
-    var newVal = { $set: { valor: req.body.valor, data: req.body.data } };
     
-    db.collection(colName).updateOne(id, newVal, (err, result) => {
-      if (err) {
-        res.send({ 'error': 'Erro ao alterar conta de luz: ' + err });
-      } else {
-        res.send(luz);
-      }
-    });
+    db.collection(colName).updateOne(
+      { _id: parseInt(req.params.id) },
+      { $set: { valor: req.body.valor, data: req.body.data } },
+      (err, result) => {
+        if (err) {
+          res.send({ 'error': 'Erro ao alterar conta de luz: ' + err });
+        } else {
+          res.send(luz);
+        }
+      });
   });
 
 

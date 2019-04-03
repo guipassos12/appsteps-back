@@ -35,8 +35,6 @@ module.exports = function (app, db, autoIncrement) {
 
 
   app.put('/lembretes/update/:id', (req, res) => {
-    var id = parseInt(req.params.id);
-    var newVal = { $set: { compromisso: req.body.compromisso, responsavel: req.body.responsavel, data: req.body.data } };
     var lembrete = {
       _id: req.params.id,
       compromisso: req.body.compromisso,
@@ -44,13 +42,16 @@ module.exports = function (app, db, autoIncrement) {
       data: req.body.data
     };
 
-    db.collection(colName).updateOne(id, newVal, (err, result) => {
-      if (err) {
-        res.send({ 'error': 'Erro ao alterar lembrete: ' + err });
-      } else {
-        res.send(lembrete);
-      }
-    });
+    db.collection(colName).updateOne(
+      { _id: parseInt(req.params.id) },
+      { $set: { compromisso: req.body.compromisso, responsavel: req.body.responsavel, data: req.body.data } },
+      (err, result) => {
+        if (err) {
+          res.send({ 'error': 'Erro ao alterar lembrete: ' + err });
+        } else {
+          res.send(lembrete);
+        }
+      });
   });
 
 
