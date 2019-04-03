@@ -1,5 +1,3 @@
-const ObjectId = require('mongodb').ObjectID;
-
 module.exports = function (app, db, autoIncrement) {
 
   const colName = 'compras';
