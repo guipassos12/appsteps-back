@@ -22,7 +22,8 @@ MongoClient.connect(db.url, { useNewUrlParser: true }, (err, client) => {
     });
 
     app.get('/alive', function (req, res) {
-        res.send("{'res': 'Tamo ai na atividade'}");
+        var res = { "res": "Tamo ai na atividade" };
+        res.send(JSON.stringify(res));
     });
 
     const database = client.db("appstepsdb");
