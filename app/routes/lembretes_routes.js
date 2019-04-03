@@ -15,7 +15,7 @@ module.exports = function (app, db, autoIncrement) {
 
   app.post('/lembretes/add', (req, res) => {
     autoIncrement.getNextSequence(db, colName, (err, autoIndex) => {
-      const lembrete = {
+      var lembrete = {
         _id: autoIndex,
         compromisso: req.body.compromisso,
         responsavel: req.body.responsavel,
@@ -30,6 +30,26 @@ module.exports = function (app, db, autoIncrement) {
           res.send(lembrete);
         }
       });
+    });
+  });
+
+
+  app.put('/lembretes/update/:id', (req, res) => {
+    var id = parseInt(req.params.id);
+    var newVal = { $set: { compromisso: req.body.compromisso, responsavel: req.body.responsavel, data: req.body.data, } };
+    var lembrete = {
+      _id: req.params.id,
+      compromisso: req.body.compromisso,
+      responsavel: req.body.responsavel,
+      data: req.body.data
+    };
+
+    db.collection(colName).updateOne(id, newVal, (err, result) => {
+      if (err) {
+        res.send({ 'error': 'Erro ao alterar lembrete: ' + err });
+      } else {
+        res.send(lembrete);
+      }
     });
   });
 
