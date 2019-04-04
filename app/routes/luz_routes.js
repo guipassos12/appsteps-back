@@ -3,7 +3,7 @@ module.exports = function (app, db, autoIncrement) {
   const colName = 'luz';
 
   app.get('/luz', (req, res) => {
-    db.collection(colName).find({}).sort({data: -1}.toArray((err, result) => {
+    db.collection(colName).find({}).sort({ data: -1 }).toArray((err, result) => {
       if (err) {
         res.send({ 'error': 'Erro ao buscar contas de luz: ' + err });
       } else {
@@ -28,9 +28,9 @@ module.exports = function (app, db, autoIncrement) {
   });
 
 
-  app.put('/luz/update/:id', (req, res) => { 
+  app.put('/luz/update/:id', (req, res) => {
     var luz = { _id: req.params.id, valor: req.params.valor, data: req.body.data };
-    
+
     db.collection(colName).updateOne(
       { _id: parseInt(req.params.id) },
       { $set: { valor: req.body.valor, data: req.body.data } },
