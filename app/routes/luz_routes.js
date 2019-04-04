@@ -3,7 +3,8 @@ module.exports = function (app, db, autoIncrement) {
   const colName = 'luz';
 
   app.get('/luz', (req, res) => {
-    db.collection(colName).find({}).sort({ data: -1 }).toArray((err, result) => {
+    var query = { data: /^ + req.query.ano + /  };
+    db.collection(colName).find(query).sort({ data: -1 }).toArray((err, result) => {
       if (err) {
         res.send({ 'error': 'Erro ao buscar contas de luz: ' + err });
       } else {
