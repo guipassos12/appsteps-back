@@ -14,10 +14,10 @@ module.exports = function (app, db, autoIncrement) {
 
 
   app.post('/luz/add', (req, res) => {
-    db.collection(colName).find({ "data": req.body.data }).toArray((err, result) => {
+    db.collection(colName).find({ "data": req.body.data }).limit(1).count().toArray((err, result) => {
       if (err) {
         res.send({ 'error': 'Erro ao buscar contas de luz: ' + err });
-      } else if (result) {
+      } else if (result > 0) {
         res.send({ 'error': 'Já existe uma conta para esse mês' });
       } else {
         autoIncrement.getNextSequence(db, colName, (err, autoIndex) => {
