@@ -5,7 +5,7 @@ module.exports = function (app, db, autoIncrement) {
   app.get('/compras', (req, res) => {
     db.collection(colName).find({}).toArray((err, result) => {
       if (err) {
-        res.send({ 'error': 'Erro ao buscar compras: ' + err });
+        res.status(500).send({ 'error': 'Erro ao buscar compras: ' + err });
       } else {
         res.send(result);
       }
@@ -19,7 +19,7 @@ module.exports = function (app, db, autoIncrement) {
       
       db.collection(colName).insertOne(compra, (err, result) => {
         if (err) {
-          res.send({ 'error': 'Erro ao inserir compra: ' + err });
+          res.status(500).send({ 'error': 'Erro ao inserir compra: ' + err });
         } else {
           res.send(compra);
         }
@@ -31,7 +31,7 @@ module.exports = function (app, db, autoIncrement) {
   app.delete('/compras/del/:id', (req, res) => {
     db.collection(colName).deleteOne({ _id : parseInt(req.params.id) }, (err, result) => {
       if (err) {
-        res.send({ 'error': 'Erro ao finalizar compra: ' + err });
+        res.status(500).send({ 'error': 'Erro ao finalizar compra: ' + err });
       } else {
         res.send({ 'ok': req.params.id + ' deletado com sucesso' });
       }

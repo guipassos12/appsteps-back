@@ -5,7 +5,7 @@ module.exports = function (app, db, autoIncrement) {
   app.get('/lembretes', (req, res) => {
     db.collection(colName).find({}).toArray((err, result) => {
       if (err) {
-        res.send({ 'error': 'Erro ao buscar lembretes: ' + err });
+        res.status(500).send({ 'error': 'Erro ao buscar lembretes: ' + err });
       } else {
         res.send(result);
       }
@@ -25,7 +25,7 @@ module.exports = function (app, db, autoIncrement) {
 
       db.collection(colName).insertOne(lembrete, (err, result) => {
         if (err) {
-          res.send({ 'error': 'Erro ao inserir lembrete: ' + err });
+          res.status(500).send({ 'error': 'Erro ao inserir lembrete: ' + err });
         } else {
           res.send(lembrete);
         }
@@ -47,7 +47,7 @@ module.exports = function (app, db, autoIncrement) {
       { $set: { compromisso: req.body.compromisso, responsavel: req.body.responsavel, data: req.body.data } },
       (err, result) => {
         if (err) {
-          res.send({ 'error': 'Erro ao alterar lembrete: ' + err });
+          res.status(500).send({ 'error': 'Erro ao alterar lembrete: ' + err });
         } else {
           res.send(lembrete);
         }
@@ -58,7 +58,7 @@ module.exports = function (app, db, autoIncrement) {
   app.delete('/lembretes/del/:id', (req, res) => {
     db.collection(colName).deleteOne({ _id: parseInt(req.params.id) }, (err, result) => {
       if (err) {
-        res.send({ 'error': 'Erro ao finalizar lembrete: ' + err });
+        res.status(500).send({ 'error': 'Erro ao finalizar lembrete: ' + err });
       } else {
         res.send({ 'ok': req.params.id + ' deletado com sucesso' });
       }

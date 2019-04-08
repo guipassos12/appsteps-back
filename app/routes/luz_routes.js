@@ -5,7 +5,7 @@ module.exports = function (app, db, autoIncrement) {
   app.get('/luz', (req, res) => {
     db.collection(colName).find({ "data": { $regex: ".*" + req.query.ano + ".*" } }).sort({ data: -1 }).toArray((err, result) => {
       if (err) {
-        res.send({ 'error': 'Erro ao buscar contas de luz: ' + err });
+        res.status(500).send({ 'error': 'Erro ao buscar contas de luz: ' + err });
       } else {
         res.send(result);
       }
@@ -16,9 +16,9 @@ module.exports = function (app, db, autoIncrement) {
   app.post('/luz/add', (req, res) => {
     db.collection(colName).find({ "data": req.body.data }).count((err, count) => {
       if (err) {
-        res.send({ 'error': 'Erro ao buscar contas de luz: ' + err });
+        res.status(500).send({ 'error': 'Erro ao buscar contas de luz: ' + err });
       } else if (count > 0) {
-        res.send({ 'error': 'Já existe uma conta para esse mês' });
+        res.status(400).send({ 'error': 'Já existe uma conta para esse mês' });
       } else {
         autoIncrement.getNextSequence(db, colName, (err, autoIndex) => {
           var luz = { _id: autoIndex, valor: req.body.valor, data: req.body.data };
@@ -39,32 +39,23 @@ module.exports = function (app, db, autoIncrement) {
   app.put('/luz/update/:id', (req, res) => {
     var luz = { _id: req.params.id, valor: req.params.valor, data: req.body.data };
 
-    db.collection(colName).find({ "data": req.body.data }).count((err, count) => {
-      if (err) {
-        res.send({ 'error': 'Erro ao buscar contas de luz: ' + err });
-      } else if (count > 0) {
-        res.send({ 'error': 'Já existe uma conta para esse mês' });
-      } else {
-        db.collection(colName).updateOne(
-          { _id: parseInt(req.params.id) },
-          { $set: { valor: req.body.valor, data: req.body.data } },
-          (err, result) => {
-            if (err) {
-              res.send({ 'error': 'Erro ao alterar conta de luz: ' + err });
-            } else {
-              res.send(luz);
-            }
-          });
-      }
-    });
-
+    db.collection(colName).updateOne(
+      { _id: parseInt(req.params.id) },
+      { $set: { valor: req.body.valor, data: req.body.data } },
+      (err, result) => {
+        if (err) {
+          res.status(500).send({ 'error': 'Erro ao alterar conta de luz: ' + err });
+        } else {
+          res.send(luz);
+        }
+      });
   });
 
 
   app.delete('/luz/del/:id', (req, res) => {
     db.collection(colName).deleteOne({ _id: parseInt(req.params.id) }, (err, result) => {
       if (err) {
-        res.send({ 'error': 'Erro ao finalizar conta de luz: ' + err });
+        res.status(500).send({ 'error': 'Erro ao finalizar conta de luz: ' + err });
       } else {
         res.send({ 'ok': req.params.id + ' deletado com sucesso' });
       }
