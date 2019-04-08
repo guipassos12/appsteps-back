@@ -14,10 +14,10 @@ module.exports = function (app, db, autoIncrement) {
 
 
   app.post('/luz/add', (req, res) => {
-    db.collection(colName).find({ "data": req.body.data }).limit(1).count().toArray((err, result) => {
+    db.collection(colName).find({ "data": req.body.data }).count((err, count) => {
       if (err) {
         res.send({ 'error': 'Erro ao buscar contas de luz: ' + err });
-      } else if (result > 0) {
+      } else if (count > 0) {
         res.send({ 'error': 'Já existe uma conta para esse mês' });
       } else {
         autoIncrement.getNextSequence(db, colName, (err, autoIndex) => {
@@ -39,16 +39,25 @@ module.exports = function (app, db, autoIncrement) {
   app.put('/luz/update/:id', (req, res) => {
     var luz = { _id: req.params.id, valor: req.params.valor, data: req.body.data };
 
-    db.collection(colName).updateOne(
-      { _id: parseInt(req.params.id) },
-      { $set: { valor: req.body.valor, data: req.body.data } },
-      (err, result) => {
-        if (err) {
-          res.send({ 'error': 'Erro ao alterar conta de luz: ' + err });
-        } else {
-          res.send(luz);
-        }
-      });
+    db.collection(colName).find({ "data": req.body.data }).count((err, count) => {
+      if (err) {
+        res.send({ 'error': 'Erro ao buscar contas de luz: ' + err });
+      } else if (count > 0) {
+        res.send({ 'error': 'Já existe uma conta para esse mês' });
+      } else {
+        db.collection(colName).updateOne(
+          { _id: parseInt(req.params.id) },
+          { $set: { valor: req.body.valor, data: req.body.data } },
+          (err, result) => {
+            if (err) {
+              res.send({ 'error': 'Erro ao alterar conta de luz: ' + err });
+            } else {
+              res.send(luz);
+            }
+          });
+      }
+    });
+
   });
 
 
