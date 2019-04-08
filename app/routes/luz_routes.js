@@ -14,16 +14,24 @@ module.exports = function (app, db, autoIncrement) {
 
 
   app.post('/luz/add', (req, res) => {
-    autoIncrement.getNextSequence(db, colName, (err, autoIndex) => {
-      var luz = { _id: autoIndex, valor: req.body.valor, data: req.body.data };
+    db.collection(colName).find({ "data": req.body.data }).toArray((err, result) => {
+      if (err) {
+        res.send({ 'error': 'Erro ao buscar contas de luz: ' + err });
+      } else if (result) {
+        res.send({ 'error': 'Já existe uma conta para esse mês' });
+      } else {
+        autoIncrement.getNextSequence(db, colName, (err, autoIndex) => {
+          var luz = { _id: autoIndex, valor: req.body.valor, data: req.body.data };
 
-      db.collection(colName).insertOne(luz, (err, result) => {
-        if (err) {
-          res.send({ 'error': 'Erro ao inserir compra: ' + err });
-        } else {
-          res.send(luz);
-        }
-      });
+          db.collection(colName).insertOne(luz, (err, result) => {
+            if (err) {
+              res.send({ 'error': 'Erro ao inserir compra: ' + err });
+            } else {
+              res.send(luz);
+            }
+          });
+        });
+      }
     });
   });
 
