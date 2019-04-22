@@ -20,7 +20,7 @@ module.exports = function (app, db, autoIncrement) {
         compromisso: req.body.compromisso,
         responsavel: req.body.responsavel,
         data: req.body.data,
-        feito: req.body.feito
+        alarme: req.body.alarme
       };
 
       db.collection(colName).insertOne(lembrete, (err, result) => {
@@ -39,7 +39,8 @@ module.exports = function (app, db, autoIncrement) {
       _id: req.params.id,
       compromisso: req.body.compromisso,
       responsavel: req.body.responsavel,
-      data: req.body.data
+      data: req.body.data,
+      alarme: req.body.alarme
     };
 
     db.collection(colName).updateOne(
