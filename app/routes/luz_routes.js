@@ -18,7 +18,7 @@ module.exports = function (app, db, autoIncrement) {
       if (err) {
         res.status(500).send({ 'error': 'Erro ao buscar conta vigente: ' + err });
       } else {
-        res.send(result.valor);
+        res.send(result);
       }
     });
   });
