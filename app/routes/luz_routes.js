@@ -13,6 +13,17 @@ module.exports = function (app, db, autoIncrement) {
   });
 
 
+  app.get('/luz/conta', (req, res) => {
+    db.collection(colName).findOne({ "mes" : parseInt(req.query.mes) }, (err, result) => {
+      if (err) {
+        res.status(500).send({ 'error': 'Erro ao buscar conta vigente: ' + err });
+      } else {
+        res.send(result);
+      }
+    });
+  });
+
+
   app.post('/luz/add', (req, res) => {
     db.collection(colName).find({ "data": req.body.data }).count((err, count) => {
       if (err) {
