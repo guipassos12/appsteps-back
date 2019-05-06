@@ -14,7 +14,7 @@ module.exports = function (app, db, autoIncrement) {
 
 
   app.get('/luz/conta', (req, res) => {
-    db.collection(colName).findOne({ "mes" : parseInt(req.query.mes) }, (err, result) => {
+    db.collection(colName).findOne({ "data" : req.query.data }, (err, result) => {
       if (err) {
         res.status(500).send({ 'error': 'Erro ao buscar conta vigente: ' + err });
       } else {
